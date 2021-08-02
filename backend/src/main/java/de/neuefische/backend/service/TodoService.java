@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.util.Assert.hasText;
 import static org.springframework.util.Assert.notNull;
@@ -35,5 +36,21 @@ public class TodoService {
         todo.setStatus(Status.OPEN);
 
         return todoRepository.create(todo);
+    }
+
+    public Optional<Todo> move(String todoId) {
+        Optional<Todo> todoOpt = todoRepository.find(todoId);
+        if (todoOpt.isEmpty()) {
+            return Optional.empty();
+        }
+        Todo todo = todoOpt.get();
+
+        // moving a todo in the next state is business logic
+        Status actualStatus = todo.getStatus();
+        Status nextStatus = actualStatus.next(actualStatus);
+        todo.setStatus(nextStatus);
+
+        todoRepository.save(todo);
+        return Optional.of(todo);
     }
 }

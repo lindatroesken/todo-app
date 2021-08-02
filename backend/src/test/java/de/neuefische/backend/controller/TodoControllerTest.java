@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -55,8 +57,8 @@ class TodoControllerTest {
     public void testCreationOfTodoAndGet() {
         String url = String.format("http://localhost:%d/api/todo", port);
 
-        Todo illegalArgumentTodo = new Todo("", "desc", Status.IN_PROGRESS);
-        ResponseEntity<Todo> actualTodoResponse = testRestTemplate.postForEntity(url, illegalArgumentTodo, Todo.class);
+        Todo todo = new Todo("", "desc", Status.IN_PROGRESS);
+        ResponseEntity<Todo> actualTodoResponse = testRestTemplate.postForEntity(url, todo, Todo.class);
 
         HttpStatus actualStatus = actualTodoResponse.getStatusCode();
         assertEquals(HttpStatus.OK, actualStatus);
@@ -76,6 +78,33 @@ class TodoControllerTest {
         Todo[] actualTodoResponseBody = actualTodoResponseGET.getBody();
         assertNotNull(actualTodoResponseBody);
         assertEquals(1, actualTodoResponseBody.length);
+    }
+
+    @Test
+    public void testMovingATodo() {
+        String postUrl = String.format("http://localhost:%d/api/todo", port);
+
+        Todo todo = new Todo("", "desc", Status.IN_PROGRESS);
+        ResponseEntity<Todo> actualTodoResponse = testRestTemplate.postForEntity(postUrl, todo, Todo.class);
+
+        Todo createdTodo = actualTodoResponse.getBody();
+        assertNotNull(createdTodo);
+        // created todo always in status open
+        assertEquals(Status.OPEN, createdTodo.getStatus());
+
+        // move todo next status
+
+        String putUrl = String.format("http://localhost:%d/api/todo/%s", port, createdTodo.getId());
+        ResponseEntity<Todo> actualMovedResponse = testRestTemplate.exchange(putUrl, HttpMethod.PUT, HttpEntity.EMPTY, Todo.class);
+
+        HttpStatus actualStatusCode = actualMovedResponse.getStatusCode();
+        assertEquals(HttpStatus.OK, actualStatusCode);
+
+        Todo actualMovedTodo = actualMovedResponse.getBody();
+        assertNotNull(actualMovedTodo);
+
+        // todo in status open will be moved to status progress
+        assertEquals(Status.IN_PROGRESS, actualMovedTodo.getStatus());
     }
 
 }

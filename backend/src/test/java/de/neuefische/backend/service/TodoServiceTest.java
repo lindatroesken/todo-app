@@ -6,6 +6,7 @@ import de.neuefische.backend.repo.TodoRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -94,5 +95,30 @@ class TodoServiceTest {
 
         // then
         assertEquals(Status.OPEN, actual.getStatus());
+    }
+
+    @Test
+    public void testCreatedTodoWillBeMoved() {
+        // given
+        TodoService todoService = new TodoService(new TodoRepository());
+
+        // when
+        Todo todo = new Todo("1", "desc", Status.IN_PROGRESS);
+        Todo actual = todoService.create(todo);
+        assertEquals(Status.OPEN, actual.getStatus(), "Todo must be created with status OPEN");
+
+        // move to status progress
+        Optional<Todo> actualMovedTodoOpt = todoService.move(todo.getId());
+        assertTrue(actualMovedTodoOpt.isPresent());
+
+        Todo actualMovedTodo = actualMovedTodoOpt.get();
+        assertEquals(Status.IN_PROGRESS, actualMovedTodo.getStatus());
+
+        // move to status done
+        actualMovedTodoOpt = todoService.move(todo.getId());
+        assertTrue(actualMovedTodoOpt.isPresent());
+
+        actualMovedTodo = actualMovedTodoOpt.get();
+        assertEquals(Status.DONE, actualMovedTodo.getStatus());
     }
 }

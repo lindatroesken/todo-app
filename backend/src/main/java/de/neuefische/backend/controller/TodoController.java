@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/todo")
 public class TodoController {
 
-    private TodoService todoService;
+    private final TodoService todoService;
 
     @Autowired
     public TodoController(TodoService todoService) {
@@ -45,7 +46,18 @@ public class TodoController {
 
     @PutMapping("{id}")
     public Todo moveTodo(@PathVariable("id") String todoId) {
-        return new Todo("1", "desc", Status.IN_PROGRESS);
+        Optional<Todo> todoMovedOpt;
+        try {
+            todoMovedOpt = todoService.move(todoId);
+
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+        if (todoMovedOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return todoMovedOpt.get();
     }
 
     @DeleteMapping("{id}")

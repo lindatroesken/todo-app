@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
+
+import static org.springframework.util.Assert.hasText;
+import static org.springframework.util.Assert.notNull;
 
 @Repository
 public class TodoRepository {
@@ -26,5 +30,18 @@ public class TodoRepository {
         todosMap.put(todo.getId(), todo);
 
         return todo;
+    }
+
+    public Optional<Todo> find(String todoId) {
+        hasText(todoId, "Id of a Todo must not be blank to find");
+
+        Todo todo = todosMap.get(todoId);
+        return Optional.ofNullable(todo);
+    }
+
+    public void save(Todo todo) {
+        notNull(todo, "A Todo must not be null to be saved");
+
+        todosMap.put(todo.getId(), todo);
     }
 }
