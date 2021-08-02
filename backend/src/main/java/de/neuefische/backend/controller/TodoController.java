@@ -4,6 +4,7 @@ import de.neuefische.backend.model.Status;
 import de.neuefische.backend.model.Todo;
 import de.neuefische.backend.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -33,7 +35,12 @@ public class TodoController {
 
     @PostMapping
     public Todo addTodo(@RequestBody Todo todo) {
-        return new Todo("1", "desc", Status.OPEN);
+        try {
+            return todoService.create(todo);
+
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @PutMapping("{id}")

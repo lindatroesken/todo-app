@@ -10,6 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -50,4 +51,48 @@ class TodoServiceTest {
         assertEquals("description", actualFirstTodo.getDescription());
     }
 
+    @Test
+    public void testNullTodoCreation() {
+        // given
+        TodoService todoService = new TodoService(new TodoRepository());
+
+        try {
+            // when
+            todoService.create(null);
+            fail();
+
+        } catch (IllegalArgumentException e) {
+            // expected to be thrown if todo is null
+        }
+    }
+
+    @Test
+    public void testNullTodoCreationWithBlankDescription() {
+        // given
+        TodoService todoService = new TodoService(new TodoRepository());
+
+        try {
+            // when
+            Todo todo = new Todo("1", "", Status.OPEN);
+
+            todoService.create(todo);
+            fail();
+
+        } catch (IllegalArgumentException e) {
+            // expected to be thrown if todo description is blank
+        }
+    }
+
+    @Test
+    public void testTodoWillBeCreatedWithStatusOpen() {
+        // given
+        TodoService todoService = new TodoService(new TodoRepository());
+
+        // when
+        Todo todo = new Todo("1", "desc", Status.IN_PROGRESS);
+        Todo actual = todoService.create(todo);
+
+        // then
+        assertEquals(Status.OPEN, actual.getStatus());
+    }
 }
