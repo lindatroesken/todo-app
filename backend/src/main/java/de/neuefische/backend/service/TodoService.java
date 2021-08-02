@@ -39,7 +39,7 @@ public class TodoService {
     }
 
     public Optional<Todo> move(String todoId) {
-        Optional<Todo> todoOpt = todoRepository.find(todoId);
+        Optional<Todo> todoOpt = findTodo(todoId);
         if (todoOpt.isEmpty()) {
             return Optional.empty();
         }
@@ -52,5 +52,20 @@ public class TodoService {
 
         todoRepository.save(todo);
         return Optional.of(todo);
+    }
+
+    private Optional<Todo> findTodo(String todoId) {
+        return todoRepository.find(todoId);
+    }
+
+    public Optional<Todo> delete(String todoId) {
+        Optional<Todo> todoOpt = findTodo(todoId);
+        if (todoOpt.isEmpty()) {
+            return Optional.empty();
+        }
+        Todo todo = todoOpt.get();
+
+        // remove todo from repo
+        return todoRepository.delete(todo);
     }
 }

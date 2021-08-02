@@ -2,7 +2,10 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.Status;
 import de.neuefische.backend.model.Todo;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -16,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TodoControllerTest {
 
@@ -26,6 +29,7 @@ class TodoControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
+    @Order(0)
     @Test
     public void testEmptyTodosControllerGET() {
         String url = String.format("http://localhost:%d/api/todo", port);
@@ -39,6 +43,7 @@ class TodoControllerTest {
         assertEquals(0, actualTodoResponseBody.length);
     }
 
+    @Order(1)
     @Test
     public void testIllegalCreationOfTodo() {
         String url = String.format("http://localhost:%d/api/todo", port);
@@ -53,6 +58,7 @@ class TodoControllerTest {
         assertNull(emptyBody);
     }
 
+    @Order(2)
     @Test
     public void testCreationOfTodoAndGet() {
         String url = String.format("http://localhost:%d/api/todo", port);
@@ -80,6 +86,7 @@ class TodoControllerTest {
         assertEquals(1, actualTodoResponseBody.length);
     }
 
+    @Order(4)
     @Test
     public void testMovingATodo() {
         String postUrl = String.format("http://localhost:%d/api/todo", port);
@@ -107,4 +114,55 @@ class TodoControllerTest {
         assertEquals(Status.IN_PROGRESS, actualMovedTodo.getStatus());
     }
 
+    @Order(5)
+    @Test
+    public void testDeleteUnknownTodo() {
+        String deleteUrl = String.format("http://localhost:%d/api/todo/%s", port, "unknown");
+        ResponseEntity<Void> deleteResponse =
+                testRestTemplate.exchange(deleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, Void.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, deleteResponse.getStatusCode());
+    }
+
+    @Order(6)
+    @Test
+    public void testDeleteBlankTodo() {
+        String deleteUrl = String.format("http://localhost:%d/api/todo/%s", port, " ");
+        ResponseEntity<Void> deleteResponse =
+                testRestTemplate.exchange(deleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, Void.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, deleteResponse.getStatusCode());
+    }
+
+    @Order(7)
+    @Test
+    public void deleteTodo() {
+        // get current todos created in user journey
+        String url = String.format("http://localhost:%d/api/todo", port);
+        ResponseEntity<Todo[]> actualTodoResponse = testRestTemplate.getForEntity(url, Todo[].class);
+
+        HttpStatus actualStatus = actualTodoResponse.getStatusCode();
+        assertEquals(HttpStatus.OK, actualStatus);
+
+        Todo[] actualTodoResponseBody = actualTodoResponse.getBody();
+        assertNotNull(actualTodoResponseBody);
+        assertEquals(2, actualTodoResponseBody.length);
+
+        // delete all todos
+        for (Todo todo : actualTodoResponseBody) {
+            String deleteUrl = String.format("http://localhost:%d/api/todo/%s", port, todo.getId());
+
+            ResponseEntity<Todo> deleteResponse =
+                    testRestTemplate.exchange(deleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, Todo.class);
+
+            assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
+            assertEquals(todo, deleteResponse.getBody());
+        }
+
+        // fetch again all todos, result must be empty
+        actualTodoResponse = testRestTemplate.getForEntity(url, Todo[].class);
+        actualTodoResponseBody = actualTodoResponse.getBody();
+        assertNotNull(actualTodoResponseBody);
+        assertEquals(0, actualTodoResponseBody.length);
+    }
 }

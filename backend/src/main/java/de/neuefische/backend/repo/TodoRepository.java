@@ -27,7 +27,7 @@ public class TodoRepository {
         // all persistence related issues are handled by the repo
 
         todo.setId(UUID.randomUUID().toString());
-        todosMap.put(todo.getId(), todo);
+        persist(todo);
 
         return todo;
     }
@@ -41,7 +41,18 @@ public class TodoRepository {
 
     public void save(Todo todo) {
         notNull(todo, "A Todo must not be null to be saved");
+        persist(todo);
+    }
 
+    private void persist(Todo todo) {
         todosMap.put(todo.getId(), todo);
+    }
+
+    public Optional<Todo> delete(Todo todo) {
+        notNull(todo, "A Todo must not be null to be deleted");
+        hasText(todo.getId(), "Id of a Todo must not be blank to be deleted");
+
+        Todo todoDeleted = todosMap.remove(todo.getId());
+        return Optional.ofNullable(todoDeleted);
     }
 }

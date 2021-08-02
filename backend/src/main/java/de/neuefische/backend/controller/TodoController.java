@@ -1,6 +1,5 @@
 package de.neuefische.backend.controller;
 
-import de.neuefische.backend.model.Status;
 import de.neuefische.backend.model.Todo;
 import de.neuefische.backend.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +61,17 @@ public class TodoController {
 
     @DeleteMapping("{id}")
     public Todo deleteTodo(@PathVariable("id") String todoId) {
-        return new Todo("1", "desc", Status.DONE);
+        Optional<Todo> todoDeleteOpt;
+        try {
+            todoDeleteOpt = todoService.delete(todoId);
+
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+        if (todoDeleteOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return todoDeleteOpt.get();
     }
 }
