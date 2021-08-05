@@ -3,6 +3,6 @@ import App from './App'
 
 test('renders learn react link', () => {
   render(<App />)
-  const heading = screen.getByText(/super kanban 3000/i)
+  const heading = screen.getByText(/super kanban 4000/i)
   expect(heading).toBeInTheDocument()
 })
