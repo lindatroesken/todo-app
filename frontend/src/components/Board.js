@@ -9,7 +9,7 @@ export default function Board(props) {
         {props.todos.map(todo => {
           return (
             <li key={todo.id}>
-              <TodoItem todo={todo} />
+              <TodoItem todo={todo} onAdvance={props.onAdvance} />
             </li>
           )
         })}

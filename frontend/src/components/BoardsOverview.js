@@ -10,8 +10,12 @@ export default function BoardsOverview(props) {
 
   return (
     <main className="boards-overview">
-      <Board title="Todo" todos={openTodos} />
-      <Board title="Doing" todos={inProgressTodos} />
+      <Board title="Todo" todos={openTodos} onAdvance={props.onAdvance} />
+      <Board
+        title="Doing"
+        todos={inProgressTodos}
+        onAdvance={props.onAdvance}
+      />
       <Board title="Done" todos={doneTodos} />
     </main>
   )
