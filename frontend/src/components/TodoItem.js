@@ -1,4 +1,15 @@
 import './TodoItem.css'
+import PropTypes from 'prop-types'
+
+TodoItem.propTypes = {
+  todo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+  }).isRequired,
+  onAdvance: PropTypes.func,
+  onDelete: PropTypes.func,
+}
 
 export default function TodoItem({ todo, onAdvance, onDelete }) {
   return (

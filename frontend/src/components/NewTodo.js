@@ -1,5 +1,10 @@
 import './NewTodo.css'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
+
+NewTodo.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+}
 
 export default function NewTodo({ onAdd }) {
   const [description, setDescription] = useState('')
