@@ -1,0 +1,19 @@
+import './Board.css'
+import TodoItem from './TodoItem'
+
+export default function Board(props) {
+  return (
+    <section className="board">
+      <h2>{props.title}</h2>
+      <ul className="board-list">
+        {props.todos.map(todo => {
+          return (
+            <li key={todo.id}>
+              <TodoItem todo={todo} />
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
+}
