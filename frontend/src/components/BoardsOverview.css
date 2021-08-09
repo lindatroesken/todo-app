@@ -1,0 +1,7 @@
+.boards-overview {
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 12px;
+    padding: 0 12px;
+}
