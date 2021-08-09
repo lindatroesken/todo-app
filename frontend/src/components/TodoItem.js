@@ -1,16 +1,12 @@
 import './TodoItem.css'
 
-export default function TodoItem(props) {
+export default function TodoItem({ todo, onAdvance, onDelete }) {
   return (
     <section className="todo-item">
-      <h3>{props.todo.description}</h3>
-      <section class="todo-item__button-group">
-        {props.onAdvance && (
-          <button onClick={() => props.onAdvance(props.todo)}>Advance</button>
-        )}
-        {props.onDelete && (
-          <button onClick={() => props.onDelete(props.todo.id)}>Delete</button>
-        )}
+      <h3>{todo.description}</h3>
+      <section className="todo-item__button-group">
+        {onAdvance && <button onClick={() => onAdvance(todo)}>Advance</button>}
+        {onDelete && <button onClick={() => onDelete(todo.id)}>Delete</button>}
       </section>
     </section>
   )
