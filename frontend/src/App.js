@@ -3,7 +3,12 @@ import Header from './components/Header'
 import BoardsOverview from './components/BoardsOverview'
 import NewTodo from './components/NewTodo'
 import { useEffect, useState } from 'react'
-import { getAllTodos, postTodo, putTodo } from './service/todo-api-service'
+import {
+  deleteTodo,
+  getAllTodos,
+  postTodo,
+  putTodo,
+} from './service/todo-api-service'
 import { nextStatus } from './service/todo-service'
 
 export default function App() {
@@ -29,10 +34,20 @@ export default function App() {
       .catch(error => console.error(error))
   }
 
+  const removeTodo = id =>
+    deleteTodo(id)
+      .then(() => getAllTodos())
+      .then(todos => setTodos(todos))
+      .catch(error => console.error(error))
+
   return (
     <div className="page-layout">
       <Header />
-      <BoardsOverview todos={todos} onAdvance={advanceTodo} />
+      <BoardsOverview
+        todos={todos}
+        onAdvance={advanceTodo}
+        onDelete={removeTodo}
+      />
       <NewTodo onAdd={createNewTodo} />
     </div>
   )

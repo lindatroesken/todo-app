@@ -16,7 +16,7 @@ export default function BoardsOverview(props) {
         todos={inProgressTodos}
         onAdvance={props.onAdvance}
       />
-      <Board title="Done" todos={doneTodos} />
+      <Board title="Done" todos={doneTodos} onDelete={props.onDelete} />
     </main>
   )
 }

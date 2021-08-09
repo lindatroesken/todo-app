@@ -8,7 +8,9 @@ export default function TodoItem(props) {
         {props.onAdvance && (
           <button onClick={() => props.onAdvance(props.todo)}>Advance</button>
         )}
-        <button>Delete</button>
+        {props.onDelete && (
+          <button onClick={() => props.onDelete(props.todo.id)}>Delete</button>
+        )}
       </section>
     </section>
   )
