@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
 export default function DetailsPage() {
+  const { id } = useParams()
   return (
     <Wrapper>
       <h2>This is a wonderful title</h2>

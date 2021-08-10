@@ -56,7 +56,7 @@ export default function App() {
             createNewTodo={createNewTodo}
           />
         </Route>
-        <Route path="/details">
+        <Route path="/details/:id">
           <DetailsPage />
         </Route>
         <Route path="/">
