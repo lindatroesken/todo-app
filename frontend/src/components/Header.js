@@ -9,9 +9,9 @@ export default function Header() {
 }
 
 const HeaderStyle = styled.header`
-    background-color: limegreen;
-    h1 {
-      margin: 0;
-      padding: 12px;
-    }
+  background-color: limegreen;
+  h1 {
+    margin: 0;
+    padding: 12px;
+  }
 `

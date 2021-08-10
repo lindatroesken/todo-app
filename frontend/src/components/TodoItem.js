@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import React from "react";
-import {Link} from "react-router-dom";
+import styled from 'styled-components/macro'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 TodoItem.propTypes = {
   todo: PropTypes.shape({
@@ -15,39 +15,53 @@ TodoItem.propTypes = {
 
 export default function TodoItem({ todo, onAdvance, onDelete }) {
   return (
-      <TodoItemStyle>
-        <section>
-          <h3>{todo.description}</h3>
-            <TodoItemButtonStyle>
+    <TodoItemStyle>
+      <section>
+        <h3>{todo.description}</h3>
+        <TodoItemButtonStyle>
+          {/*<Link to={{pathname: "/details/", state:{todo:todo}}}>Details</Link>*/}
+          <Link to={`/details/${todo.id}`}>Details</Link>
           <section className="todo-item__button-group">
-            {onAdvance && <ButtonComp adv onClick={() => onAdvance(todo)}>Advance</ButtonComp>}
-            {onDelete && <ButtonComp del onClick={() => onDelete(todo.id)}>Delete</ButtonComp>}
+            {onAdvance && (
+              <ButtonComp adv onClick={() => onAdvance(todo)}>
+                Advance
+              </ButtonComp>
+            )}
+            {onDelete && (
+              <ButtonComp del onClick={() => onDelete(todo.id)}>
+                Delete
+              </ButtonComp>
+            )}
           </section>
-
-          <Link to="/details" todo={todo}>Details</Link>
-
-            </TodoItemButtonStyle>
-        </section>
-      </TodoItemStyle>
+        </TodoItemButtonStyle>
+      </section>
+    </TodoItemStyle>
   )
 }
 
+// <Route
+//     path='/dashboard'
+//     render={(props) => (
+//         <Dashboard {...props} isAuthed={true} />
+//     )}
+// />
+
 const TodoItemStyle = styled.section`
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 1px 2px 8px #666;
-    background-color: hotpink;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 1px 2px 8px #666;
+  background-color: hotpink;
 `
 const TodoItemButtonStyle = styled.section`
-    display: flex;
-    justify-content: flex-end;
-    padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 `
 
 const ButtonComp = styled.button`
   padding: 5px;
   border-radius: 5px;
-  ${props => props.adv ? 'background-color: green;': ''}
-  ${props => props.del ? 'background-color: red;': ''} 
+  ${props => (props.adv ? 'background-color: green;' : '')}
+  ${props => (props.del ? 'background-color: red;' : '')}
 `

@@ -1,6 +1,6 @@
 import TodoItem from './TodoItem'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 Board.propTypes = {
   title: PropTypes.string.isRequired,
@@ -33,10 +33,10 @@ export default function Board({ title, todos, onAdvance, onDelete }) {
 }
 
 const BoardList = styled.ul`
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-gap: 12px;
-    background-color: white;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-gap: 12px;
+  background-color: white;
 `

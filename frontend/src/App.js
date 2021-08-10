@@ -8,14 +8,15 @@ import {
 } from './service/todo-api-service'
 import { nextStatus } from './service/todo-service'
 
-import React from "react";
+import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-} from "react-router-dom";
-import Home from "./components/Home";
-import Details from "./components/Details";
+  Redirect,
+} from 'react-router-dom'
+import Home from './pages/Home'
+import Details from './pages/Details'
 
 export default function App() {
   const [todos, setTodos] = useState([])
@@ -47,15 +48,23 @@ export default function App() {
       .catch(error => console.error(error))
 
   return (
-      <Router>
-        <Switch>
-          <Route path="/details">
-            <Details/>
-          </Route>
-          <Route exact path="/">
-              <Home todos={todos} onAdvance={advanceTodo} onDelete={removeTodo} onAdd={createNewTodo}/>
-            </Route>
-        </Switch>
-      </Router>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home
+            todos={todos}
+            onAdvance={advanceTodo}
+            onDelete={removeTodo}
+            onAdd={createNewTodo}
+          />
+        </Route>
+        <Route path="/details/:id">
+          <Details />
+        </Route>
+        <Route path="/">
+          <Redirect to="/" />
+        </Route>
+      </Switch>
+    </Router>
   )
 }

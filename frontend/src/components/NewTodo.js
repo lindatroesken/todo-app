@@ -1,10 +1,8 @@
-
 import { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
-import React from "react";
-
+import React from 'react'
 
 NewTodo.propTypes = {
   onAdd: PropTypes.func.isRequired,
@@ -30,9 +28,8 @@ export default function NewTodo({ onAdd }) {
 }
 
 const NewToDoStyle = styled.section`
-    display: grid;
-    grid-template-columns: 1fr min-content;
-    padding: 12px;
-    background-color: lightblue;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  padding: 12px;
+  background-color: lightblue;
 `
-
