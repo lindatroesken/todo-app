@@ -1,9 +1,17 @@
-import './Header.css'
+import styled from 'styled-components'
 
 export default function Header() {
   return (
-    <header className="header">
+    <HeaderStyle>
       <h1>Super Kanban</h1>
-    </header>
+    </HeaderStyle>
   )
 }
+
+const HeaderStyle = styled.header`
+    background-color: limegreen;
+    h1 {
+      margin: 0;
+      padding: 12px;
+    }
+`

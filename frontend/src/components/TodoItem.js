@@ -1,6 +1,5 @@
-import './TodoItem.css'
 import PropTypes from 'prop-types'
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 
 TodoItem.propTypes = {
   todo: PropTypes.shape({
@@ -15,7 +14,7 @@ TodoItem.propTypes = {
 export default function TodoItem({ todo, onAdvance, onDelete }) {
   return (
       <TodoItemStyle>
-        <section className="todo-item">
+        <section>
           <h3>{todo.description}</h3>
             <TodoItemButtonStyle>
           <section className="todo-item__button-group">
@@ -42,7 +41,8 @@ const TodoItemButtonStyle = styled.section`
 `
 
 const ButtonComp = styled.button`
-${props => props.adv ? 'background-color: green;': ''}
-${props => props.del ? 'background-color: red;': ''}
-
+  padding: 5px;
+  border-radius: 5px;
+  ${props => props.adv ? 'background-color: green;': ''}
+  ${props => props.del ? 'background-color: red;': ''} 
 `
