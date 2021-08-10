@@ -19,8 +19,8 @@ export default function TodoItem({ todo, onAdvance, onDelete }) {
           <h3>{todo.description}</h3>
             <TodoItemButtonStyle>
           <section className="todo-item__button-group">
-            {onAdvance && <button onClick={() => onAdvance(todo)}>Advance</button>}
-            {onDelete && <button onClick={() => onDelete(todo.id)}>Delete</button>}
+            {onAdvance && <ButtonComp adv onClick={() => onAdvance(todo)}>Advance</ButtonComp>}
+            {onDelete && <ButtonComp del onClick={() => onDelete(todo.id)}>Delete</ButtonComp>}
           </section>
             </TodoItemButtonStyle>
         </section>
@@ -39,4 +39,10 @@ const TodoItemButtonStyle = styled.section`
     display: flex;
     justify-content: flex-end;
     padding: 5px;
+`
+
+const ButtonComp = styled.button`
+${props => props.adv ? 'background-color: green;': ''}
+${props => props.del ? 'background-color: red;': ''}
+
 `
