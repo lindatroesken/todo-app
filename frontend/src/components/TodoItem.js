@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import React from "react";
+import {Link} from "react-router-dom";
 
 TodoItem.propTypes = {
   todo: PropTypes.shape({
@@ -21,6 +23,9 @@ export default function TodoItem({ todo, onAdvance, onDelete }) {
             {onAdvance && <ButtonComp adv onClick={() => onAdvance(todo)}>Advance</ButtonComp>}
             {onDelete && <ButtonComp del onClick={() => onDelete(todo.id)}>Delete</ButtonComp>}
           </section>
+
+          <Link to="/details" todo={todo}>Details</Link>
+
             </TodoItemButtonStyle>
         </section>
       </TodoItemStyle>

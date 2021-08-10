@@ -1,7 +1,4 @@
 import './App.css'
-import Header from './components/Header'
-import BoardsOverview from './components/BoardsOverview'
-import NewTodo from './components/NewTodo'
 import { useEffect, useState } from 'react'
 import {
   deleteTodo,
@@ -10,6 +7,15 @@ import {
   putTodo,
 } from './service/todo-api-service'
 import { nextStatus } from './service/todo-service'
+
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Home from "./components/Home";
+import Details from "./components/Details";
 
 export default function App() {
   const [todos, setTodos] = useState([])
@@ -41,14 +47,15 @@ export default function App() {
       .catch(error => console.error(error))
 
   return (
-    <div className="page-layout">
-      <Header />
-      <BoardsOverview
-        todos={todos}
-        onAdvance={advanceTodo}
-        onDelete={removeTodo}
-      />
-      <NewTodo onAdd={createNewTodo} />
-    </div>
+      <Router>
+        <Switch>
+          <Route path="/details">
+            <Details/>
+          </Route>
+          <Route exact path="/">
+              <Home todos={todos} onAdvance={advanceTodo} onDelete={removeTodo} onAdd={createNewTodo}/>
+            </Route>
+        </Switch>
+      </Router>
   )
 }
