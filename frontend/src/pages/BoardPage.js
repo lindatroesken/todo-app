@@ -4,6 +4,7 @@ import Board from '../components/Board'
 import PropTypes from 'prop-types'
 import { slugToStatus, statusToTitle } from '../service/todo-service'
 import PageLayout from '../components/PageLayout'
+import styled from 'styled-components/macro'
 
 BoardPage.propTypes = {
   todos: PropTypes.array.isRequired,
@@ -23,7 +24,7 @@ export default function BoardPage({ todos, onAdvance, onDelete }) {
   return (
     <PageLayout>
       <Header />
-      <Board
+      <BoardStyled
         title={title}
         todos={filteredTodos}
         onAdvance={status !== 'DONE' && onAdvance}
@@ -32,3 +33,7 @@ export default function BoardPage({ todos, onAdvance, onDelete }) {
     </PageLayout>
   )
 }
+
+const BoardStyled = styled(Board)`
+  padding: 0 12px;
+`
