@@ -18,7 +18,7 @@ export default function TodoItem({ todo, onAdvance, onDelete }) {
     <TodoItemStyleComp>
       <h3>{todo.description}</h3>
       <section className="todo-item__button-group">
-        <Link to="/details">Details</Link>
+        <Link to={`/details/${todo.id}`}>Details</Link>
         {onAdvance && (
           <ButtonComp adv onClick={() => onAdvance(todo)}>
             Advance
