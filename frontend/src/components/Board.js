@@ -15,9 +15,15 @@ Board.propTypes = {
   onDelete: PropTypes.func,
 }
 
-export default function Board({ title, todos, onAdvance, onDelete }) {
+export default function Board({
+  className,
+  title,
+  todos,
+  onAdvance,
+  onDelete,
+}) {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <h2>{title}</h2>
       <List>
         {todos.map(todo => {
