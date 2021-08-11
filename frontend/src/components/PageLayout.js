@@ -1,4 +1,6 @@
-.page-layout {
+import styled from 'styled-components/macro'
+
+export default styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -6,8 +8,4 @@
   height: 100%;
   display: grid;
   grid-template-rows: min-content 1fr min-content;
-}
-
-.board {
-  width: 300px;
-}
+`

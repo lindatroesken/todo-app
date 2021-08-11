@@ -1,6 +1,6 @@
-import './Board.css'
 import TodoItem from './TodoItem'
 import PropTypes from 'prop-types'
+import styled from 'styled-components/macro'
 
 Board.propTypes = {
   title: PropTypes.string.isRequired,
@@ -15,11 +15,17 @@ Board.propTypes = {
   onDelete: PropTypes.func,
 }
 
-export default function Board({ title, todos, onAdvance, onDelete }) {
+export default function Board({
+  className,
+  title,
+  todos,
+  onAdvance,
+  onDelete,
+}) {
   return (
-    <section className="board">
+    <section className={className}>
       <h2>{title}</h2>
-      <ul className="board-list">
+      <List>
         {todos.map(todo => {
           return (
             <li key={todo.id}>
@@ -27,7 +33,15 @@ export default function Board({ title, todos, onAdvance, onDelete }) {
             </li>
           )
         })}
-      </ul>
+      </List>
     </section>
   )
 }
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-gap: 12px;
+`

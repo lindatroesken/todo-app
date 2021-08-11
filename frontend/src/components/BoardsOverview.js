@@ -1,6 +1,6 @@
-import './BoardsOverview.css'
 import Board from './Board'
 import PropTypes from 'prop-types'
+import styled from 'styled-components/macro'
 
 BoardsOverview.propTypes = {
   todos: PropTypes.arrayOf(
@@ -20,10 +20,18 @@ export default function BoardsOverview({ todos, onAdvance, onDelete }) {
   const doneTodos = todos.filter(todo => todo.status === 'DONE')
 
   return (
-    <main className="boards-overview">
+    <Wrapper>
       <Board title="Todo" todos={openTodos} onAdvance={onAdvance} />
       <Board title="Doing" todos={inProgressTodos} onAdvance={onAdvance} />
       <Board title="Done" todos={doneTodos} onDelete={onDelete} />
-    </main>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.main`
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 12px;
+  padding: 0 12px;
+`
