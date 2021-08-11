@@ -1,7 +1,9 @@
-import { Link, useParams } from 'react-router-dom'
-import styled from 'styled-components/macro'
+import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import PageLayout from '../components/PageLayout'
+import Header from '../components/Header'
+import TodoDetails from '../components/TodoDetails'
 
 export default function DetailsPage() {
   const { id } = useParams()
@@ -21,20 +23,9 @@ export default function DetailsPage() {
   }
 
   return (
-    <Wrapper>
-      <h2>{todo.description}</h2>
-      <p>Status: {todo.status}</p>
-      <Link to="/">Back</Link>
-    </Wrapper>
+    <PageLayout>
+      <Header />
+      <TodoDetails {...todo} />
+    </PageLayout>
   )
 }
-
-const Wrapper = styled.section`
-  a {
-    padding: 4px;
-    border: 1px solid hotpink;
-    background: none;
-    color: hotpink;
-    text-decoration: none;
-  }
-`

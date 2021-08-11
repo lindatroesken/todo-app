@@ -1,6 +1,7 @@
 import Header from '../components/Header'
 import BoardsOverview from '../components/BoardsOverview'
 import NewTodo from '../components/NewTodo'
+import PageLayout from '../components/PageLayout'
 
 export default function Homepage({
   todos,
@@ -9,7 +10,7 @@ export default function Homepage({
   createNewTodo,
 }) {
   return (
-    <div className="page-layout">
+    <PageLayout>
       <Header />
       <BoardsOverview
         todos={todos}
@@ -17,6 +18,6 @@ export default function Homepage({
         onDelete={removeTodo}
       />
       <NewTodo onAdd={createNewTodo} />
-    </div>
+    </PageLayout>
   )
 }

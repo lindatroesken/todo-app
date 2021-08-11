@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import Board from '../components/Board'
 import PropTypes from 'prop-types'
 import { slugToStatus, statusToTitle } from '../service/todo-service'
+import PageLayout from '../components/PageLayout'
 
 BoardPage.propTypes = {
   todos: PropTypes.array.isRequired,
@@ -20,7 +21,7 @@ export default function BoardPage({ todos, onAdvance, onDelete }) {
   const title = statusToTitle(status)
 
   return (
-    <section>
+    <PageLayout>
       <Header />
       <Board
         title={title}
@@ -28,6 +29,6 @@ export default function BoardPage({ todos, onAdvance, onDelete }) {
         onAdvance={status !== 'DONE' && onAdvance}
         onDelete={status === 'DONE' && onDelete}
       />
-    </section>
+    </PageLayout>
   )
 }
