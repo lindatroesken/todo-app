@@ -5,9 +5,9 @@ export default function Navbar() {
   return (
     <Nav>
       <NavLink to="/">Home</NavLink>
-      <NavLink to="/board/OPEN">Open</NavLink>
-      <NavLink to="/board/IN_PROGRESS">Doing</NavLink>
-      <NavLink to="/board/DONE">Done</NavLink>
+      <NavLink to="/board/todo">Todo</NavLink>
+      <NavLink to="/board/doing">Doing</NavLink>
+      <NavLink to="/board/done">Done</NavLink>
     </Nav>
   )
 }
