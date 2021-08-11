@@ -23,7 +23,7 @@ export default function Board({
   onDelete,
 }) {
   return (
-    <Wrapper className={className}>
+    <section className={className}>
       <h2>{title}</h2>
       <List>
         {todos.map(todo => {
@@ -34,13 +34,9 @@ export default function Board({
           )
         })}
       </List>
-    </Wrapper>
+    </section>
   )
 }
-
-const Wrapper = styled.section`
-  width: 300px;
-`
 
 const List = styled.ul`
   list-style: none;
