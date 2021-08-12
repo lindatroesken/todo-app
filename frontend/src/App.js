@@ -63,6 +63,7 @@ export default function App() {
             onDelete={removeTodo}
           />
         </Route>
+        <Route path="/edit/:id"></Route>
         <Route path="/details/:id">
           <DetailsPage />
         </Route>
