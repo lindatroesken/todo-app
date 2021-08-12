@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
 import TodoDetails from '../components/TodoDetails'
