@@ -3,7 +3,7 @@ import {
   deleteTodo,
   getAllTodos,
   postTodo,
-  putTodo,
+  putTodo, putUpdateTodo,
 } from './service/todo-api-service'
 import { nextStatus } from './service/todo-service'
 import {
@@ -15,6 +15,8 @@ import {
 import Homepage from './pages/Homepage'
 import DetailsPage from './pages/DetailsPage'
 import BoardPage from './pages/BoardPage'
+import EditForm from "./components/EditForm";
+import EditPage from "./pages/EditPage";
 
 export default function App() {
   const [todos, setTodos] = useState([])
@@ -37,6 +39,13 @@ export default function App() {
       .then(() => getAllTodos())
       .then(todos => setTodos(todos))
       .catch(error => console.error(error))
+  }
+
+  const updateTodo = todo => {
+    putUpdateTodo(todo)
+        .then(() => getAllTodos())
+        .then(todos => setTodos(todos))
+        .catch(error => console.error(error))
   }
 
   const removeTodo = id =>
@@ -63,7 +72,9 @@ export default function App() {
             onDelete={removeTodo}
           />
         </Route>
-        <Route path="/edit/:id"></Route>
+        <Route path="/edit/:id" >
+          <EditPage onUpdate={updateTodo}/>
+        </Route>
         <Route path="/details/:id">
           <DetailsPage />
         </Route>
