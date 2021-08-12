@@ -10,19 +10,13 @@ export default function EditPage({onUpdate}) {
     const [todo, setTodo] = useState()
 
     useEffect(() => {
-        getTodoById(id)
-            .then(todo => setTodo(todo))
-            .catch(error => console.error(error))
+        getTodoById(id).then(setTodo).catch(console.error)
     }, [id])
-
-    if (!todo) {
-        return <p>loading</p>
-    }
 
     return (
         <PageLayout>
             <Header />
-            <EditForm todo={todo} onUpdate={onUpdate} />
+            {todo ? <EditForm todo={todo} onUpdate={onUpdate} /> : <p>loading</p>}
         </PageLayout>
     )
 }

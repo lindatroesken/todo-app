@@ -10,7 +10,10 @@ export default function EditForm({ todo, onUpdate }) {
     const handleSubmit = (event) => {
         event.preventDefault()
         const newTodo = {...todo, description: description, status: status}
-        onUpdate(newTodo).then(() => history.push('/'))
+        console.log(newTodo)
+        onUpdate(newTodo)
+            .then(console.log("onUpdate running"))
+            .then(() => history.push('/'))
     }
 
     const handleDescriptionChange = event => setDescription(event.target.value)
