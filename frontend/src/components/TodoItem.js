@@ -18,7 +18,7 @@ export default function TodoItem({ todo, onAdvance, onDelete }) {
     <TodoItemStyleComp>
       <h3>{todo.description}</h3>
       <section className="todo-item__button-group">
-        <Link to="/details">Details</Link>
+        <Link to={`/details/${todo.id}`}>Details</Link>
         {onAdvance && (
           <ButtonComp adv onClick={() => onAdvance(todo)}>
             Advance
@@ -43,5 +43,5 @@ const TodoItemStyleComp = styled.section`
 
 const ButtonComp = styled.button`
   ${props => (props.del ? 'background-color: lightcoral;' : '')}
-  ${props => (props.adv ? 'background-color: lightblue;' : '')}
+  ${props => (props.adv ? '&:hover{background-color: pink;} background-color: lightblue;' : '')}
 `

@@ -1,15 +1,32 @@
 import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components/macro'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function DetailsPage() {
-  const { id } = useParams()
-  return (
-    <Wrapper>
-      <h2>This is a wonderful title</h2>
-      <p>Status: OPEN</p>
-      <Link to="/">Back</Link>
-    </Wrapper>
-  )
+    const { id } = useParams()
+
+    const [todo, setTodo] = useState()
+
+    useEffect(() => {
+        axios
+            .get(`/api/todo/${id}`)
+            .then(response => response.data)
+            .then(fetchedTodo => setTodo(fetchedTodo))
+            .catch(error => console.error(error))
+    }, [id])
+
+    if (!todo) {
+        return <p>loading</p>
+    }
+
+    return (
+        <Wrapper>
+            <h2>{todo.description}</h2>
+            <p>Status: {todo.status}</p>
+            <Link to="/">Back</Link>
+        </Wrapper>
+    )
 }
 
 const Wrapper = styled.section`

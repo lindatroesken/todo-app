@@ -15,6 +15,8 @@ import {
 } from 'react-router-dom'
 import Homepage from './pages/Homepage'
 import DetailsPage from './pages/DetailsPage'
+import Header from "./components/Header";
+import SingleStatusPage from "./pages/SingleStatusPage";
 
 export default function App() {
   const [todos, setTodos] = useState([])
@@ -47,6 +49,7 @@ export default function App() {
 
   return (
     <Router>
+      <Header />
       <Switch>
         <Route exact path="/">
           <Homepage
@@ -55,6 +58,9 @@ export default function App() {
             removeTodo={removeTodo}
             createNewTodo={createNewTodo}
           />
+        </Route>
+        <Route path="/board/:status">
+          <SingleStatusPage todos={todos} onAdvance={advanceTodo} onDelete={removeTodo}/>
         </Route>
         <Route path="/details/:id">
           <DetailsPage />

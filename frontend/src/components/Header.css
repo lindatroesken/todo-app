@@ -1,4 +1,24 @@
 .header {
+  display: grid;
+  grid-template-columns: 1fr 30%;
+  background-color: lightblue;
+  height: 10%;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
+.nav a {
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: hotpink;
+  height: min-content;
+  padding: 5px;
+  box-shadow: black 1px 1px 3px;
 }
 
 .header h1 {

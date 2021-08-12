@@ -1,6 +1,7 @@
 import Header from '../components/Header'
 import BoardsOverview from '../components/BoardsOverview'
 import NewTodo from '../components/NewTodo'
+import './Hompage.css'
 
 export default function Homepage({
   todos,
@@ -10,7 +11,6 @@ export default function Homepage({
 }) {
   return (
     <div className="page-layout">
-      <Header />
       <BoardsOverview
         todos={todos}
         onAdvance={advanceTodo}
