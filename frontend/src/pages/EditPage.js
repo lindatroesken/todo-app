@@ -16,7 +16,7 @@ export default function EditPage({onUpdate}) {
     return (
         <PageLayout>
             <Header />
-            {todo ? <EditForm todo={todo} onUpdate={onUpdate} /> : <p>loading</p>}
+            {todo ? <EditForm todo={todo} onSave={onUpdate} /> : <p>loading</p>}
         </PageLayout>
     )
 }

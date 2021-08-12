@@ -1,29 +1,9 @@
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import {useState} from "react";
+import useEditForm from "../hooks/useEditForm";
 
-export default function EditForm({ todo, onUpdate }) {
-    const [description, setDescription] = useState(todo.description);
-    const [status, setStatus] = useState(todo.status)
-    const history = useHistory()
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        const newTodo = {...todo, description: description, status: status}
-        console.log(newTodo)
-        onUpdate(newTodo)
-            .then(console.log("onUpdate running"))
-            .then(() => history.push('/'))
-    }
-
-    const handleDescriptionChange = event => setDescription(event.target.value)
-
-    const handleStatusChange = event => setStatus(event.target.value)
-
-    const handleResetForm = () => {
-        setDescription(todo.description)
-        setStatus(todo.status)
-    }
+export default function EditForm({ todo, onSave }) {
+    const {status, description, handleSubmit, handleStatusChange,handleDescriptionChange,handleResetForm} = useEditForm(todo, onSave)
 
     return (
         <Wrapper onSubmit={handleSubmit}>
