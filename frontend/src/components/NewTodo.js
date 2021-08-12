@@ -9,23 +9,26 @@ NewTodo.propTypes = {
 export default function NewTodo({ onAdd }) {
   const [description, setDescription] = useState('')
 
-  const handleAddClick = () => {
-    onAdd(description).then(() => setDescription(''))
+  const handleSubmit = event => {
+    event.preventDefault()
+    if (description) {
+      onAdd(description).then(() => setDescription(''))
+    }
   }
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleSubmit}>
       <input
         type="text"
         value={description}
         onChange={event => setDescription(event.target.value)}
       />
-      <button onClick={handleAddClick}>Add</button>
+      <button>Add</button>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.section`
+const Wrapper = styled.form`
   display: grid;
   grid-template-columns: 1fr min-content;
   padding: 12px;
